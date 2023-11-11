@@ -10,7 +10,15 @@ async def webhook(request: Request):
     if content_type == "application/json":
         # Handle JSON payload
         payload = await request.json()
-        print("Webhook received (JSON):", payload)
+        print("Webhook received (JSON): ", payload)
+        payloaddata = json.loads(json.dumps(payload))
+        IFTTT_PAYLOAD = {
+            "value1": payloaddata["message"],
+            "value2": " by ",
+            "value3": payloaddata["source"]
+         }
+        print("Transformed JSON to client: ", IFTTT_PAYLOAD)
+        
         # Handle the JSON payload as needed
     elif content_type == "application/x-www-form-urlencoded":
         # Handle form data
